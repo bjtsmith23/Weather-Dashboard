@@ -1,5 +1,6 @@
 h1 {
     color: black;
+    font-size: 25px;
     font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -18,37 +19,41 @@ header {
 }
 
 .currentData {
-    height: 200px;
+    height: 250px;
     background-color: lightseagreen;
-    max-width: 75%;
-    margin-left: 25px;
-    border: 4px solid white;
+    border: 4px solid black;
+    margin-bottom: 10px;
 }
 
-
-/* #currentCity, #currentDay {
-    background-color: grey;
+#cityStored {
+    display: flex;
+    flex-direction: column;
 }
-
-h4 {
-    background-color: grey;
-} */
 
 .card-body {
-    margin-top: 10px;
-    height: 150px;
-
-}
-
-#cards {
-    margin-top: 20px;
-    margin-left: 20px;
-    max-width: 75%;
-    
-}
-
-/* section {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
     background-color: lightseagreen;
-    max-width: 55%;
-    height: 800px;
-} */
+    height: 300px;
+    width: 200px;
+    border: 4px solid black;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: cornflowerblue;
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: auto;
+    }
+}
+

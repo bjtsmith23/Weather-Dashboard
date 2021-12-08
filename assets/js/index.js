@@ -1,13 +1,16 @@
 var startSearch = document.getElementById('btn-primary');
 console.log(startSearch);
 var searchbar = document.getElementById('searchbar');
+var searchItem = [];
 
 
 
 startSearch.addEventListener('click', function(event) {
     event.preventDefault();
-    startWeather();
-    startFiveDay();
+    startWeather(); 
+    // reutilize start weather ----
+    storeCity();
+    
 });
 
 function startWeather() {
@@ -28,10 +31,15 @@ function startWeather() {
         temp.textContent = "Temperature: " + results.main.temp + " F";
 
         var humidity = document.getElementById('currentHumidity');
-        humidity.textContent = "Humidity: " + results.main.humidity;
+        humidity.textContent = "Humidity: " + results.main.humidity + " %";
 
         var wind = document.getElementById('currentWind');
         wind.textContent = "Wind Speed: " + results.wind.speed + " mph";
+
+        var weatherPic = document.getElementById('weatherIcon');
+        var weatherIcon = results.weather[0].icon;
+        var iconLink = "https://openweathermap.org/img/w/" + weatherIcon + ".png";
+        weatherPic.src = iconLink;
 
         // temperature
         console.log(results.main.temp);
@@ -40,88 +48,157 @@ function startWeather() {
         // wind speed
         console.log(results.wind.speed)
         // UV index
+        startFiveDay(results.coord.lat, results.coord.lon);
     })  
     console.log(searchbar.value);
+    
+
 }
 
-function startFiveDay() {
+function startFiveDay(lat, lon) {
 
-    var fiveDayApi = `https://api.openweathermap.org/data/2.5/forecast?q=${searchbar.value}&appid=1d6fa67dda044e40f9f19d333512fae6&units=imperial`
+    var fiveDayApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=1d6fa67dda044e40f9f19d333512fae6&units=imperial`
     fetch(fiveDayApi)
     .then(function(response){
         return response.json();
     }) .then(function(results){
+        console.log(results);
+
+        var thisUvi1 = document.getElementById('currentUV');
+        thisUvi1.textContent = "UVI : " + results.current.uvi;
+
+
+        var formattedDate1 = moment.unix(results.daily[1].dt).format('MM/DD/YYYY');
+
+        // Day 1 of Five Day Forcast
 
         var thisDate1 = document.getElementById('date1');
-        thisDate1.textContent = "Date :" + results.list[7].dt_txt;
+        thisDate1.textContent = formattedDate1;
 
         var thisTemp1 = document.getElementById('temp1');
-        thisTemp1.textContent = results.list[7].main.temp + " degrees F";
+        thisTemp1.textContent = "Temperature " + results.daily[1].temp.day + " degrees F";
 
         var theseWinds1 = document.getElementById('wind1');
-        theseWinds1.textContent = results.list[7].wind.speed + " mph";
+        theseWinds1.textContent = "Wind Speed: " + results.daily[1].wind_speed + " mph";
 
         var thisHumidity1 = document.getElementById('humid1');
-        thisHumidity1.textContent = results.list[7].main.humidity;
+        thisHumidity1.textContent = "Humidity: " + results.daily[1].humidity + " %";
 
+
+
+        // Day 2 of Five Day Forcast
+        var formattedDate2 = moment.unix(results.daily[2].dt).format('MM/DD/YYYY');
 
         var thisDate2 = document.getElementById('date2');
-        thisDate2.textContent = "Date :" + results.list[15].dt_txt;
+        thisDate2.textContent = formattedDate2;
 
         var thisTemp2 = document.getElementById('temp2');
-        thisTemp2.textContent = results.list[15].main.temp + " degrees F";
+        thisTemp2.textContent = "Temperature " + results.daily[2].temp.day + " degrees F";
 
         var theseWinds2 = document.getElementById('wind2');
-        theseWinds2.textContent = results.list[15].wind.speed + " mph";
+        theseWinds2.textContent = "Wind Speed: " + results.daily[2].wind_speed + " mph";
 
         var thisHumidity2 = document.getElementById('humid2');
-        thisHumidity2.textContent = results.list[15].main.humidity;
+        thisHumidity2.textContent = "Humidity: " + results.daily[2].humidity + " %";
 
+
+        // Day 3 of Five Day Forcast
+
+        var formattedDate3 = moment.unix(results.daily[3].dt).format('MM/DD/YYYY');
 
         var thisDate3 = document.getElementById('date3');
-        thisDate3.textContent = "Date :" + results.list[23].dt_txt;
+        thisDate3.textContent = formattedDate3;
+
         var thisTemp3 = document.getElementById('temp3');
-        thisTemp3.textContent = results.list[23].main.temp + " degrees F";
+        thisTemp3.textContent = "Temperature " + results.daily[3].temp.day + " degrees F";
 
         var theseWinds3 = document.getElementById('wind3');
-        theseWinds3.textContent = results.list[23].wind.speed + " mph"
+        theseWinds3.textContent = "Wind Speed: " + results.daily[3].wind_speed + " mph";
 
         var thisHumidity3 = document.getElementById('humid3');
-        thisHumidity3.textContent = results.list[23].main.humidity;
+        thisHumidity3.textContent = "Humidity: " + results.daily[3].humidity + " %";
 
+        
+        // Day 4 of Five Day Forcast
+
+        var formattedDate4 = moment.unix(results.daily[4].dt).format('MM/DD/YYYY');
 
         var thisDate4 = document.getElementById('date4');
-        thisDate4.textContent = "Date :" + results.list[31].dt_txt;
+        thisDate4.textContent = formattedDate4;
 
         var thisTemp4 = document.getElementById('temp4');
-        thisTemp4.textContent = results.list[39].main.temp + " degrees F";
+        thisTemp4.textContent = "Temperature " + results.daily[4].temp.day + " degrees F";
 
         var theseWinds4 = document.getElementById('wind4');
-        theseWinds5.textContent = results.list[31].wind.speed + " mph"
+        theseWinds4.textContent = "Wind Speed: " + results.daily[4].wind_speed + " mph";
 
         var thisHumidity4 = document.getElementById('humid4');
-        thisHumidity4.textContent = results.list[31].main.humidity;
+        thisHumidity4.textContent = "Humidity: " + results.daily[4].humidity + " %";
 
+
+        // Day 4 of Five Day Forcast
+
+        var formattedDate4 = moment.unix(results.daily[5].dt).format('MM/DD/YYYY');
+
+        var thisDate4 = document.getElementById('date4');
+        thisDate4.textContent = formattedDate4;
+
+        var thisTemp4 = document.getElementById('temp4');
+        thisTemp4.textContent = "Temperature " + results.daily[5].temp.day + " degrees F";
+
+        var theseWinds4 = document.getElementById('wind4');
+        theseWinds4.textContent = "Wind Speed: " + results.daily[5].wind_speed + " mph";
+
+        var thisHumidity4 = document.getElementById('humid4');
+        thisHumidity4.textContent = "Humidity: " + results.daily[5].humidity + " %";
+
+
+        // Day 5 of Five Day Forcast
+
+        
+        var formattedDate5 = moment.unix(results.daily[7].dt).format('MM/DD/YYYY');
 
         var thisDate5 = document.getElementById('date5');
-        thisDate5.textContent = "Date :" + results.list[39].dt_txt;
-        
-        var thisTemp5 = document.getElementById('temp5');
-        thisTemp5.textContent = results.list[39].main.temp + " degrees F";
+        thisDate5.textContent = formattedDate5;
+
+        var thisTemp5 = document.getElementById('temp4');
+        thisTemp5.textContent = "Temperature " + results.daily[7].temp.day + " degrees F";
 
         var theseWinds5 = document.getElementById('wind5');
-        theseWinds5.textContent = results.list[39].wind.speed + " mph"
+        theseWinds5.textContent = "Wind Speed: " + results.daily[7].wind_speed + " mph";
 
         var thisHumidity5 = document.getElementById('humid5');
-        thisHumidity5.textContent = results.list[39].main.humidity;
+        thisHumidity5.textContent = "Humidity: " + results.daily[7].humidity + " %";
         
         
-        console.log(results.list[7].main.temp);
-        console.log(results.list[15].main.temp);
-        console.log(results.list[23].main.temp);
-        console.log(results.list[31].weather[0].main);
-        console.log(results.list[39].dt_txt);
+        
+        
 })};
+
+function storeCity() {
+    var searchedCity = document.getElementById('cityStored')
+    var button = document.createElement('button')
+    button.textContent = searchbar.value;
+    searchItem.push(searchbar.value);
+    button.addEventListener('click', function(event){
+        event.preventDefault();
+        console.log(event.target.innerHTML);
+
+        // console.log('I have been clicked!');
+        
+    })
+
+
+    localStorage.setItem('searchedCity', JSON.stringify(searchItem));
+    // check saved scores in Code Quiz
+    // localStorage.get item - searchedCity
+
+    searchedCity.appendChild(button);
+
+
+
+
+}
 
 
 // fetch(weatherAPI) 
