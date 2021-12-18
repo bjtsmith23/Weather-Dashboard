@@ -30,6 +30,7 @@ header {
 #cityStored {
     display: flex;
     flex-direction: column;
+    background-color: white;
 }
 
 .card-body {
@@ -51,8 +52,9 @@ header {
 }
 
 button {
-    background-color: lightseagreen;
+    background-color: cornflowerblue;;
     margin: 5px;
+    border: 2px solid black;
 }
 
 @media screen and (max-width: 768px) {
