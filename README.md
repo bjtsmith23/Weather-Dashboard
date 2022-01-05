@@ -13,6 +13,7 @@ Technologies Used:
 Author:
 Brian Smith
 
+![Screenshot of Application](/assets/images/pic.png)
 
 Mozilla Public License Version 2.0
 ==================================
